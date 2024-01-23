@@ -11,6 +11,9 @@
       "cache": false
     },
     "start": {
+      "dependsOn": [
+        "^build"
+      ],
       "cache": true
     },
     "test": {},
