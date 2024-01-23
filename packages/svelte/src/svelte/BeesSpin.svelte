@@ -8,8 +8,12 @@ let __mounted = false;
 const dispatch = createEventDispatcher();
 
 export let prefixCls = undefined;
-export let hasSider = undefined;
-export let beTagName = undefined;
+export let spinning = undefined;
+export let size = undefined;
+export let tip = undefined;
+export let wrapperClassName = undefined;
+export let delay = undefined;
+export let indicator = undefined;
 
 
 
@@ -27,13 +31,17 @@ const onEvent = (e) => {
 };
 </script>
 
-<bees-layout 
+<bees-spin 
   prefix-cls={prefixCls}
-  has-sider={hasSider}
-  be-tag-name={beTagName}
+  spinning={spinning}
+  size={size}
+  tip={tip}
+  wrapper-class-name={wrapperClassName}
+  delay={delay}
+  indicator={indicator}
   
   bind:this={__ref}
 >
   <slot></slot>
-</bees-layout>
+</bees-spin>
   

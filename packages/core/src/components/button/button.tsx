@@ -1,7 +1,7 @@
 import useConfigInject from '@components/config-provider/hooks/use-config-inject';
 import { Component, ComponentInterface, Prop, h, EventEmitter, Event } from '@stencil/core';
 import { computed, shallowRef } from '@vue/reactivity';
-import classNames from 'classnames';
+import classNames from 'clsx';
 import useStyle from './style';
 import { ButtonHTMLType, ButtonShape, ButtonType, GroupSizeContext, Loading } from './buttonHelpers';
 import { SizeType } from '@components/config-provider/context';
@@ -57,10 +57,8 @@ export class Button implements ComponentInterface {
     const innerLoading = shallowRef<Loading>(false);
     const hasTwoCNChar = shallowRef(false);
     const autoInsertSpace = computed(() => autoInsertSpaceInButton.value !== false);
-    // update innerLoading
-    // const loadingOrDelay = computed(() =>
-    //   typeof this.loading === 'object' && this.loading.delay ? this.loading.delay || true : !!this.loading,
-    // );
+    console.log('autoInsertSpace', autoInsertSpace.value);
+
 
     const classes = computed(() => {
       const { type, shape = 'default', ghost, block, danger } = this;

@@ -7,9 +7,7 @@ let __mounted = false;
 
 const dispatch = createEventDispatcher();
 
-export let prefixCls = undefined;
-export let hasSider = undefined;
-export let beTagName = undefined;
+
 
 
 
@@ -27,13 +25,11 @@ const onEvent = (e) => {
 };
 </script>
 
-<bees-layout 
-  prefix-cls={prefixCls}
-  has-sider={hasSider}
-  be-tag-name={beTagName}
+<bees-space 
+  
   
   bind:this={__ref}
 >
   <slot></slot>
-</bees-layout>
+</bees-space>
   

@@ -4,23 +4,23 @@
 import { Components, JSX } from '@bees-ui/core';
 
 
-interface BeesLayoutProps {
+interface BeesLayoutHeaderProps {
   
   /**  */
-  prefixCls?: Components.BeesLayout["prefixCls"]
+  prefixCls?: Components.BeesLayoutHeader["prefixCls"]
   
   /**  */
-  hasSider?: Components.BeesLayout["hasSider"]
+  hasSider?: Components.BeesLayoutHeader["hasSider"]
   
   /**  */
-  beTagName?: Components.BeesLayout["beTagName"]
+  beTagName?: Components.BeesLayoutHeader["beTagName"]
 }
 
-interface BeesLayoutEvents {
+interface BeesLayoutHeaderEvents {
   
 }
 
-interface BeesLayoutSlots {
+interface BeesLayoutHeaderSlots {
   default: any
 }
   
@@ -46,27 +46,27 @@ import "svelte/internal/disclose-version";
 import { createEventDispatcher, onMount } from 'svelte';
 
 function create_fragment(ctx) {
-	let bees_layout;
+	let bees_layout_header;
 	let current;
 	const default_slot_template = /*#slots*/ ctx[6].default;
 	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[5], null);
 
 	return {
 		c() {
-			bees_layout = element("bees-layout");
+			bees_layout_header = element("bees-layout-header");
 			if (default_slot) default_slot.c();
-			set_custom_element_data(bees_layout, "prefix-cls", /*prefixCls*/ ctx[0]);
-			set_custom_element_data(bees_layout, "has-sider", /*hasSider*/ ctx[1]);
-			set_custom_element_data(bees_layout, "be-tag-name", /*beTagName*/ ctx[2]);
+			set_custom_element_data(bees_layout_header, "prefix-cls", /*prefixCls*/ ctx[0]);
+			set_custom_element_data(bees_layout_header, "has-sider", /*hasSider*/ ctx[1]);
+			set_custom_element_data(bees_layout_header, "be-tag-name", /*beTagName*/ ctx[2]);
 		},
 		m(target, anchor) {
-			insert(target, bees_layout, anchor);
+			insert(target, bees_layout_header, anchor);
 
 			if (default_slot) {
-				default_slot.m(bees_layout, null);
+				default_slot.m(bees_layout_header, null);
 			}
 
-			/*bees_layout_binding*/ ctx[7](bees_layout);
+			/*bees_layout_header_binding*/ ctx[7](bees_layout_header);
 			current = true;
 		},
 		p(ctx, [dirty]) {
@@ -86,15 +86,15 @@ function create_fragment(ctx) {
 			}
 
 			if (!current || dirty & /*prefixCls*/ 1) {
-				set_custom_element_data(bees_layout, "prefix-cls", /*prefixCls*/ ctx[0]);
+				set_custom_element_data(bees_layout_header, "prefix-cls", /*prefixCls*/ ctx[0]);
 			}
 
 			if (!current || dirty & /*hasSider*/ 2) {
-				set_custom_element_data(bees_layout, "has-sider", /*hasSider*/ ctx[1]);
+				set_custom_element_data(bees_layout_header, "has-sider", /*hasSider*/ ctx[1]);
 			}
 
 			if (!current || dirty & /*beTagName*/ 4) {
-				set_custom_element_data(bees_layout, "be-tag-name", /*beTagName*/ ctx[2]);
+				set_custom_element_data(bees_layout_header, "be-tag-name", /*beTagName*/ ctx[2]);
 			}
 		},
 		i(local) {
@@ -108,11 +108,11 @@ function create_fragment(ctx) {
 		},
 		d(detaching) {
 			if (detaching) {
-				detach(bees_layout);
+				detach(bees_layout_header);
 			}
 
 			if (default_slot) default_slot.d(detaching);
-			/*bees_layout_binding*/ ctx[7](null);
+			/*bees_layout_header_binding*/ ctx[7](null);
 		}
 	};
 }
@@ -140,7 +140,7 @@ function instance($$self, $$props, $$invalidate) {
 		dispatch(e.type, e.detail);
 	};
 
-	function bees_layout_binding($$value) {
+	function bees_layout_header_binding($$value) {
 		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
 			__ref = $$value;
 			$$invalidate(3, __ref);
@@ -162,20 +162,20 @@ function instance($$self, $$props, $$invalidate) {
 		getWebComponent,
 		$$scope,
 		slots,
-		bees_layout_binding
+		bees_layout_header_binding
 	];
 }
 
-class BeesLayout extends SvelteComponent {
-  $$prop_def: BeesLayoutProps;
-  $$events_def: BeesLayoutEvents;
-  $$slot_def: BeesLayoutSlots;
+class BeesLayoutHeader extends SvelteComponent {
+  $$prop_def: BeesLayoutHeaderProps;
+  $$events_def: BeesLayoutHeaderEvents;
+  $$slot_def: BeesLayoutHeaderSlots;
 
-  $on<K extends keyof BeesLayoutEvents>(type: K, callback: (e: BeesLayoutEvents[K]) => any): () => void {
+  $on<K extends keyof BeesLayoutHeaderEvents>(type: K, callback: (e: BeesLayoutHeaderEvents[K]) => any): () => void {
 	  return super.$on(type, callback);
 	}
 
-  $set($$props: Partial<BeesLayoutProps>): void {
+  $set($$props: Partial<BeesLayoutHeaderProps>): void {
 	  super.$set($$props);
 	}
 
@@ -190,9 +190,9 @@ class BeesLayout extends SvelteComponent {
 		});
 	}
 
-	get getWebComponent(): HTMLBeesLayoutElement | undefined {
+	get getWebComponent(): HTMLBeesLayoutHeaderElement | undefined {
 		return this.$$.ctx[4];
 	}
 }
 
-export default BeesLayout;
+export default BeesLayoutHeader;

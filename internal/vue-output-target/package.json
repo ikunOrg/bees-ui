@@ -14,7 +14,8 @@
   "scripts": {
     "build": "pnpm tsup",
     "start": "pnpm tsup --watch",
-    "clean": "pnpm rimraf .turbo node_modules dist"
+    "clean": "pnpm rimraf .turbo node_modules dist",
+    "stub": "pnpm run build"
   },
   "license": "MIT",
   "peerDependencies": {

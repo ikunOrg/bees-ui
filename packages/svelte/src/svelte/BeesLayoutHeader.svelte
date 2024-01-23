@@ -27,7 +27,7 @@ const onEvent = (e) => {
 };
 </script>
 
-<bees-layout 
+<bees-layout-header 
   prefix-cls={prefixCls}
   has-sider={hasSider}
   be-tag-name={beTagName}
@@ -35,5 +35,5 @@ const onEvent = (e) => {
   bind:this={__ref}
 >
   <slot></slot>
-</bees-layout>
+</bees-layout-header>
   
