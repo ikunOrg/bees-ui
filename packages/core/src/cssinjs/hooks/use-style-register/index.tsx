@@ -1,6 +1,5 @@
 import hash from '@emotion/hash';
 import type * as CSS from 'csstype';
-// @ts-ignore
 import type { Transformer } from '@cssinjs/index';
 import { contentQuotesLinter, hashedAnimationLinter, Linter } from '@cssinjs/linters';
 import StyleContext, {
@@ -33,13 +32,13 @@ export type CSSProperties = Omit<CSS.PropertiesFallback<number | string>, 'anima
 
 export type CSSPropertiesWithMultiValues = {
   [K in keyof CSSProperties]:
-    | CSSProperties[K]
-    | Extract<CSSProperties[K], string>[]
-    | {
-        [SKIP_CHECK]: boolean;
-        [MULTI_VALUE]?: boolean;
-        value: CSSProperties[K] | Extract<CSSProperties[K], string>[];
-      };
+  | CSSProperties[K]
+  | Extract<CSSProperties[K], string>[]
+  | {
+    [SKIP_CHECK]: boolean;
+    [MULTI_VALUE]?: boolean;
+    value: CSSProperties[K] | Extract<CSSProperties[K], string>[];
+  };
 };
 
 export type CSSPseudos = { [K in CSS.Pseudos]?: CSSObject };
@@ -52,7 +51,7 @@ export type CSSInterpolation = InterpolationPrimitive | ArrayCSSInterpolation | 
 
 export type CSSOthersObject = Record<string, CSSInterpolation>;
 
-export interface CSSObject extends CSSPropertiesWithMultiValues, CSSPseudos, CSSOthersObject {}
+export interface CSSObject extends CSSPropertiesWithMultiValues, CSSPseudos, CSSOthersObject { }
 
 // ============================================================================
 // ==                                 Parser                                 ==
@@ -124,11 +123,11 @@ export const parseStyle = (
     parentSelectors: [],
   },
 ): [
-  parsedStr: string,
-  // Style content which should be unique on all of the style (e.g. Keyframes).
-  // Firefox will flick with same animation name when exist multiple same keyframes.
-  effectStyle: Record<string, string>,
-] => {
+    parsedStr: string,
+    // Style content which should be unique on all of the style (e.g. Keyframes).
+    // Firefox will flick with same animation name when exist multiple same keyframes.
+    effectStyle: Record<string, string>,
+  ] => {
   const { hashId, layer, path, hashPriority, transformers = [], linters = [] } = config;
   let styleStr = '';
   let effectStyle: Record<string, string> = {};

@@ -54,5 +54,6 @@
     "typescript": "^5.3.3",
     "vanilla-tilt": "^1.8.1",
     "vite_svelte_comps": "^0.0.3"
-  }
+  },
+  "packageManager": "pnpm@8.14.0"
 }
