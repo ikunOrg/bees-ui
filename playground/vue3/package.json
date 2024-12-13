@@ -1,22 +1,32 @@
 {
-  "name": "vue3",
+  "name": "vite-project",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build-p": "vue-tsc && vite build",
-    "preview": "vite preview"
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview",
+    "test": "cross-env NODE_OPTIONS=--max_old_space_size=10240 vitest bench"
   },
   "dependencies": {
     "@bees-ui/core": "workspace:^",
     "@bees-ui/vue": "workspace:^",
-    "vue": "^3.4.15"
+    "@antv/g6": "^4.8.23",
+    "@ionic/vue": "^8.4.1",
+    "ant-design-vue": "^4.2.6",
+    "naive-ui": "^2.40.3",
+    "vue": "^3.5.10",
+    "vue-router": "^4.5.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^5.0.3",
-    "typescript": "^5.3.3",
-    "vite": "^5.0.12",
-    "vue-tsc": "^1.8.27"
+    "@vitejs/plugin-vue": "^5.1.4",
+    "@vue/test-utils": "^2.4.6",
+    "cross-env": "^7.0.3",
+    "jsdom": "^25.0.1",
+    "typescript": "^5.5.3",
+    "vite": "^5.4.8",
+    "vitest": "^2.1.8",
+    "vue-tsc": "^2.1.6"
   }
 }

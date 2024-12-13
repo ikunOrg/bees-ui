@@ -59,7 +59,6 @@ export class Button implements ComponentInterface {
     const autoInsertSpace = computed(() => autoInsertSpaceInButton.value !== false);
     console.log('autoInsertSpace', autoInsertSpace.value);
 
-
     const classes = computed(() => {
       const { type, shape = 'default', ghost, block, danger } = this;
       const pre = prefixCls.value;
@@ -88,11 +87,11 @@ export class Button implements ComponentInterface {
     };
 
     let buttonNode = (
-      <button {...buttonProps}>
-        <bees-wave>
+      <bees-wave>
+        <button {...buttonProps}>
           <slot></slot>
-        </bees-wave>
-      </button>
+        </button>
+      </bees-wave>
     );
 
     return wrapSSR(buttonNode);

@@ -7,7 +7,7 @@ import { computed } from '@vue/reactivity';
 import classNames from 'classnames';
 
 @Component({
-  tag: 'bees-wave',
+  tag: 'bees-wave-2',
 })
 export class Wave {
   @Element() el!: HTMLElement;
