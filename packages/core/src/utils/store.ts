@@ -6,7 +6,7 @@ export default store;
 
 export function inject<T>(key: symbol, defaultVal?: T) {
   const val = store.get(key as any);
-  return val ?? (defaultVal as T);
+  return (val as T) ?? (defaultVal as T);
 }
 
 export function provide(key: symbol, value: unknown) {

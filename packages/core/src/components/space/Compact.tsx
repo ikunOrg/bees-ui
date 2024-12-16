@@ -11,12 +11,12 @@ export type SpaceCompactItemContextType = Partial<ReturnType<typeof spaceCompact
 export const SpaceCompactItemContext = createContext<SpaceCompactItemContextType | null>(null);
 
 export const useCompactItemContext = (prefixCls: Ref<string>, direction: Ref<DirectionType>) => {
-  const compactItemContext = SpaceCompactItemContext.useInject();
+  const compactItemContext: any = SpaceCompactItemContext.useInject();
 
   const compactItemClassnames = computed(() => {
     if (!compactItemContext || isEmpty(compactItemContext)) return '';
 
-    const { compactDirection, isFirstItem, isLastItem } = compactItemContext;
+    const { compactDirection, isFirstItem, isLastItem } = compactItemContext as any;
     const separator = compactDirection === 'vertical' ? '-vertical-' : '-';
 
     return classNames({

@@ -1,7 +1,7 @@
 import { GlobalToken } from '@theme/interface';
 import { ComponentTokenMap } from '@theme/interface/components';
 import { UseComponentStyleResult, useToken, mergeToken, statisticToken } from '@theme/internal';
-import { computed } from '@vue/reactivity';
+import { computed, toRef } from '@vue/reactivity';
 import { Ref } from '@vue/reactivity';
 import { CSSInterpolation, useStyleRegister } from '@cssinjs/index';
 import { useConfigContextInject } from '@components/config-provider/context';
@@ -56,7 +56,7 @@ export default function genComponentStyleHook<ComponentName extends OverrideComp
       };
     });
     // Generate style for all a tags in antd component.
-    useStyleRegister(sharedInfo, () => [
+    useStyleRegister(toRef(sharedInfo, 'value'), () => [
       {
         // Link
         '&': genLinkStyle(token.value),
@@ -72,7 +72,7 @@ export default function genComponentStyleHook<ComponentName extends OverrideComp
     });
 
     return [
-      useStyleRegister(componentInfo, () => {
+      useStyleRegister(toRef(componentInfo, 'value'), () => {
         const { token: proxyToken, flush } = statisticToken(token.value);
 
         const defaultComponentToken =

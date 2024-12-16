@@ -1,4 +1,4 @@
-import { WaveEffect } from './wave-effect';
+// import { WaveEffect } from './wave-effect';
 
 export function showWaveEffect(node: HTMLElement, className: string) {
   const holder = document.createElement('bees-wave');
@@ -7,7 +7,7 @@ export function showWaveEffect(node: HTMLElement, className: string) {
   holder.style.top = `0px`;
   node.parentNode?.appendChild(holder);
 
-  const wave = document.createElement('bees-wave-effect') as unknown as WaveEffect;
+  const wave = document.createElement('bees-wave-effect') as unknown as any;
   wave.target = node;
   wave.myClassName = className;
 

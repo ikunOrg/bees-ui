@@ -97,10 +97,6 @@ export namespace Components {
     interface BeesWave {
         "disabled": boolean;
     }
-    interface BeesWaveEffect {
-        "myClassName": string | undefined;
-        "target": HTMLElement | undefined;
-    }
 }
 export interface BeesButtonCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -213,12 +209,6 @@ declare global {
         prototype: HTMLBeesWaveElement;
         new (): HTMLBeesWaveElement;
     };
-    interface HTMLBeesWaveEffectElement extends Components.BeesWaveEffect, HTMLStencilElement {
-    }
-    var HTMLBeesWaveEffectElement: {
-        prototype: HTMLBeesWaveEffectElement;
-        new (): HTMLBeesWaveEffectElement;
-    };
     interface HTMLElementTagNameMap {
         "bees-button": HTMLBeesButtonElement;
         "bees-button-group": HTMLBeesButtonGroupElement;
@@ -233,7 +223,6 @@ declare global {
         "bees-space": HTMLBeesSpaceElement;
         "bees-spin": HTMLBeesSpinElement;
         "bees-wave": HTMLBeesWaveElement;
-        "bees-wave-effect": HTMLBeesWaveEffectElement;
     }
 }
 declare namespace LocalJSX {
@@ -316,10 +305,6 @@ declare namespace LocalJSX {
     interface BeesWave {
         "disabled"?: boolean;
     }
-    interface BeesWaveEffect {
-        "myClassName"?: string | undefined;
-        "target"?: HTMLElement | undefined;
-    }
     interface IntrinsicElements {
         "bees-button": BeesButton;
         "bees-button-group": BeesButtonGroup;
@@ -334,7 +319,6 @@ declare namespace LocalJSX {
         "bees-space": BeesSpace;
         "bees-spin": BeesSpin;
         "bees-wave": BeesWave;
-        "bees-wave-effect": BeesWaveEffect;
     }
 }
 export { LocalJSX as JSX };
@@ -354,7 +338,6 @@ declare module "@stencil/core" {
             "bees-space": LocalJSX.BeesSpace & JSXBase.HTMLAttributes<HTMLBeesSpaceElement>;
             "bees-spin": LocalJSX.BeesSpin & JSXBase.HTMLAttributes<HTMLBeesSpinElement>;
             "bees-wave": LocalJSX.BeesWave & JSXBase.HTMLAttributes<HTMLBeesWaveElement>;
-            "bees-wave-effect": LocalJSX.BeesWaveEffect & JSXBase.HTMLAttributes<HTMLBeesWaveEffectElement>;
         }
     }
 }

@@ -49,7 +49,7 @@ export const defaultConfigProvider: ConfigProviderInnerProps = {
 };
 
 export const useConfigContextInject = () => {
-  return inject(configProviderKey, defaultConfigProvider);
+  return inject<ConfigProviderInnerProps>(configProviderKey, defaultConfigProvider);
 };
 
 export const useConfigContextProvider = (props: ConfigProviderInnerProps) => {

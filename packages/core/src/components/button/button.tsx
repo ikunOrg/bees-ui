@@ -7,6 +7,7 @@ import { ButtonHTMLType, ButtonShape, ButtonType, GroupSizeContext, Loading } fr
 import { SizeType } from '@components/config-provider/context';
 import { MouseEventHandler } from '@utils/EventInterface';
 import { useCompactItemContext } from '@components/space/Compact';
+import { Wave } from '@components/wave/wave-effect';
 
 @Component({
   tag: 'bees-button',
@@ -88,11 +89,14 @@ export class Button implements ComponentInterface {
 
     let buttonNode = (
       <button {...buttonProps}>
-        <bees-wave></bees-wave>
         <slot></slot>
       </button>
     );
 
-    return wrapSSR(buttonNode);
+    return (
+      <Wave component="Button" disabled={this.disabled}>
+        {wrapSSR(buttonNode)}
+      </Wave>
+    );
   }
 }

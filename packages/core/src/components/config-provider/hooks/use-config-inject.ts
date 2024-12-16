@@ -15,14 +15,14 @@ export default (name: string, props: Record<string, any>) => {
   const direction = computed(() => props.direction ?? configProvider.direction?.value);
   const iconPrefixCls = computed(() => props.iconPrefixCls ?? configProvider.iconPrefixCls.value);
   const rootPrefixCls = computed(() => configProvider.getPrefixCls());
-  const autoInsertSpaceInButton = computed(() => configProvider.autoInsertSpaceInButton?.value);
+  const autoInsertSpaceInButton = computed(() => true);
 
-  const size = computed(() => (props.size as SizeType) || sizeContext.value);
+  const size = computed(() => (props.size as SizeType) || sizeContext);
   const disabled = computed<boolean>(() => props.disabled ?? disabledContext.value);
-  const csp = computed(() => props.csp ?? configProvider.csp);
+  const csp = computed(() => props.csp);
   const wave = computed<{
     disabled?: boolean;
-  }>(() => props.wave ?? configProvider.wave?.value);
+  }>(() => props.wave);
 
   return {
     prefixCls,

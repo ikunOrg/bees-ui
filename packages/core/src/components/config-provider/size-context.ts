@@ -10,6 +10,6 @@ export const useInjectSize = () => {
 
 export const useProvideSize = (size: SizeType) => {
   const parentSize = useInjectSize();
-  provide(SizeContextKey, size || parentSize.value);
+  provide(SizeContextKey, size || parentSize);
   return size;
 };
