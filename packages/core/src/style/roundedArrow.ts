@@ -39,10 +39,7 @@ export const roundedArrow = (
       bottom: 0,
       insetInline: 0,
       margin: 'auto',
-      borderRadius: {
-        _skip_check_: true,
-        value: `0 0 ${innerRadius}px 0`,
-      },
+      borderRadius: `0 0 ${innerRadius}px 0`,
       transform: 'translateY(50%) rotate(-135deg)',
       boxShadow,
       zIndex: 0,

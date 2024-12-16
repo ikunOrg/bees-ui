@@ -1,4 +1,4 @@
-import { CSSInterpolation } from '@cssinjs/index';
+import { CSSObject } from '@cssinjs/index';
 import { AliasToken } from '@theme/internal';
 import { TokenWithCommonCls } from '@theme/util/gen-component-style-hooks';
 import { roundedArrow } from './roundedArrow';
@@ -33,7 +33,7 @@ export default function getArrowStyle<Token extends TokenWithCommonCls<AliasToke
     contentRadius?: number;
     limitVerticalRadius?: boolean;
   },
-): CSSInterpolation {
+): CSSObject {
   const { componentCls, sizePopupArrow, marginXXS, borderRadiusXS, borderRadiusOuter, boxShadowPopoverArrow } = token;
 
   const { colorBg, showArrowCls, contentRadius = token.borderRadiusLG, limitVerticalRadius } = options;
@@ -49,19 +49,17 @@ export default function getArrowStyle<Token extends TokenWithCommonCls<AliasToke
   return {
     [componentCls]: {
       // ============================ Basic ============================
-      [`${componentCls}-arrow`]: [
-        {
-          position: 'absolute',
-          zIndex: 1, // lift it up so the menu wouldn't cask shadow on it
-          display: 'block',
+      [`${componentCls}-arrow`]: {
+        position: 'absolute',
+        zIndex: 1, // lift it up so the menu wouldn't cask shadow on it
+        display: 'block',
 
-          ...roundedArrow(sizePopupArrow, borderRadiusXS, borderRadiusOuter, colorBg, boxShadowPopoverArrow),
+        ...roundedArrow(sizePopupArrow, borderRadiusXS, borderRadiusOuter, colorBg, boxShadowPopoverArrow),
 
-          '&:before': {
-            background: colorBg,
-          },
+        '&:before': {
+          background: colorBg,
         },
-      ],
+      },
 
       // ========================== Placement ==========================
       // Here handle the arrow position and rotate stuff
@@ -215,5 +213,5 @@ export default function getArrowStyle<Token extends TokenWithCommonCls<AliasToke
         },
       },
     },
-  };
+  } as CSSObject;
 }

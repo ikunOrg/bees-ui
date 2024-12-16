@@ -52,7 +52,9 @@ export type CSSInterpolation = InterpolationPrimitive | ArrayCSSInterpolation | 
 
 export type CSSOthersObject = Record<string, CSSInterpolation>;
 
-export interface CSSObject extends CSSPropertiesWithMultiValues, CSSPseudos, CSSOthersObject {}
+export interface CSSObject extends CSSProperties, CSSPseudos {
+  [key: string]: CSSInterpolation | CSSPropertiesWithMultiValues[keyof CSSPropertiesWithMultiValues];
+}
 
 // ============================================================================
 // ==                                 Parser                                 ==
