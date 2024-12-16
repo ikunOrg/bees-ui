@@ -1,23 +1,23 @@
+import { effect, reactive } from '@vue/reactivity';
 import { inject, provide } from './store';
 
-export interface Context<T> {
-  Provider: (value: T) => void;
-  Consumer: () => T;
-}
-
-export default function createContext<T>(defaultValue: T): Context<T> {
+function createContext<T extends Record<string, any>>(defaultValue?: T) {
   const contextKey = Symbol('contextKey');
-
-  function Provider(value: T) {
-    provide(contextKey, value);
-  }
-
-  function Consumer(): T {
-    return inject(contextKey, defaultValue);
-  }
-
+  const useProvide = (props: T, newProps?: T) => {
+    const mergedProps = reactive<T>({} as T);
+    provide(contextKey, mergedProps);
+    effect(() => {
+      Object.assign(mergedProps, props, newProps || {});
+    });
+    return mergedProps;
+  };
+  const useInject = () => {
+    return inject(contextKey, defaultValue as T) || ({} as T);
+  };
   return {
-    Provider,
-    Consumer,
+    useProvide,
+    useInject,
   };
 }
+
+export default createContext;
