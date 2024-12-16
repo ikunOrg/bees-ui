@@ -1,16 +1,12 @@
-import { Ref, ComputedRef } from '@vue/reactivity';
+import { Ref } from '@vue/reactivity';
 import { showWaveEffect } from './use-effect-wave';
 
-export default function useWave(
-  node: HTMLElement | null,
-  className: Ref<string>,
-  wave: ComputedRef<{ disabled?: boolean }>,
-): VoidFunction {
+export default function useWave(node: Ref<HTMLElement>, className: string, wave: string): VoidFunction {
   function showWave() {
-    if ((wave && wave.value && wave?.value?.disabled) || !node) {
+    if (!node) {
       return;
     }
-    showWaveEffect(node, className.value);
+    showWaveEffect(node.value, className);
   }
 
   return showWave;

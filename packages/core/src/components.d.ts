@@ -94,9 +94,6 @@ export namespace Components {
         "tip": any;
         "wrapperClassName": string;
     }
-    interface BeesWave {
-        "disabled": boolean;
-    }
 }
 export interface BeesButtonCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -203,12 +200,6 @@ declare global {
         prototype: HTMLBeesSpinElement;
         new (): HTMLBeesSpinElement;
     };
-    interface HTMLBeesWaveElement extends Components.BeesWave, HTMLStencilElement {
-    }
-    var HTMLBeesWaveElement: {
-        prototype: HTMLBeesWaveElement;
-        new (): HTMLBeesWaveElement;
-    };
     interface HTMLElementTagNameMap {
         "bees-button": HTMLBeesButtonElement;
         "bees-button-group": HTMLBeesButtonGroupElement;
@@ -222,7 +213,6 @@ declare global {
         "bees-locale-provider": HTMLBeesLocaleProviderElement;
         "bees-space": HTMLBeesSpaceElement;
         "bees-spin": HTMLBeesSpinElement;
-        "bees-wave": HTMLBeesWaveElement;
     }
 }
 declare namespace LocalJSX {
@@ -302,9 +292,6 @@ declare namespace LocalJSX {
         "tip"?: any;
         "wrapperClassName"?: string;
     }
-    interface BeesWave {
-        "disabled"?: boolean;
-    }
     interface IntrinsicElements {
         "bees-button": BeesButton;
         "bees-button-group": BeesButtonGroup;
@@ -318,7 +305,6 @@ declare namespace LocalJSX {
         "bees-locale-provider": BeesLocaleProvider;
         "bees-space": BeesSpace;
         "bees-spin": BeesSpin;
-        "bees-wave": BeesWave;
     }
 }
 export { LocalJSX as JSX };
@@ -337,7 +323,6 @@ declare module "@stencil/core" {
             "bees-locale-provider": LocalJSX.BeesLocaleProvider & JSXBase.HTMLAttributes<HTMLBeesLocaleProviderElement>;
             "bees-space": LocalJSX.BeesSpace & JSXBase.HTMLAttributes<HTMLBeesSpaceElement>;
             "bees-spin": LocalJSX.BeesSpin & JSXBase.HTMLAttributes<HTMLBeesSpinElement>;
-            "bees-wave": LocalJSX.BeesWave & JSXBase.HTMLAttributes<HTMLBeesWaveElement>;
         }
     }
 }
