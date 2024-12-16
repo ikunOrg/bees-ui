@@ -1,48 +1,119 @@
-import * as React from 'react';
-import useEvent from 'rc-util/lib/hooks/useEvent';
-import raf from 'rc-util/lib/raf';
+import { computed, ref } from '@vue/reactivity';
+import { useStyleRegister } from '../../../internal/cssinjs';
+import type { CSSObject } from '../../../internal/cssinjs';
+import { useConfigContextInject } from '@/components/config-provider/context';
 
-import { ConfigContext } from '../../config-provider';
-import useToken from '../../theme/useToken';
-import { TARGET_CLS } from './interface';
-import type { ShowWave, WaveComponent } from './interface';
-import showWaveEffect from './WaveEffect';
+export function useWave() {
+  const { getPrefixCls, theme } = useConfigContextInject();
+  const prefixCls = getPrefixCls('wave');
 
-const useWave = (
-  nodeRef: React.RefObject<HTMLElement>,
-  className: string,
-  component?: WaveComponent,
-) => {
-  const { wave } = React.useContext(ConfigContext);
-  const [, token, hashId] = useToken();
+  const showWave = ref(false);
+  const waveColor = ref('');
+  const isInserted = ref(false);
+  const clickWaveTimeoutId = ref<number>();
+  const animationStartId = ref<number>();
+  const extraNode = ref<HTMLDivElement | null>(null);
 
-  const showWave = useEvent<ShowWave>((event) => {
-    const node = nodeRef.current!;
+  const insertExtraNode = () => {
+    const extraNode = document.createElement('div');
+    extraNode.style.position = 'absolute';
+    extraNode.style.left = '0px';
+    extraNode.style.top = '0px';
+    extraNode.className = `${prefixCls}-click-animating-node`;
+    return extraNode;
+  };
 
-    if (wave?.disabled || !node) {
+  const onClick = (node: HTMLElement, color: string) => {
+    if (!node || isInserted.value || node.nodeType !== 1) {
       return;
     }
 
-    const targetNode = node.querySelector<HTMLElement>(`.${TARGET_CLS}`) || node;
+    isInserted.value = true;
+    extraNode.value = insertExtraNode();
+    node.appendChild(extraNode.value);
 
-    const { showEffect } = wave || {};
+    // Get wave color from target
+    const computedStyle = getComputedStyle(node);
+    const borderColor =
+      computedStyle.getPropertyValue('border-top-color') || // Firefox Compatible
+      computedStyle.getPropertyValue('border-color') ||
+      computedStyle.getPropertyValue('background-color');
 
-    // Customize wave effect
-    (showEffect || showWaveEffect)(targetNode, { className, token, component, event, hashId });
-  });
+    clickWaveTimeoutId.value = window.setTimeout(() => {
+      if (extraNode.value) {
+        extraNode.value.style.animationName = 'fadeEffect';
+        extraNode.value.style.borderColor = color || borderColor;
+      }
+    }, 0);
 
-  const rafId = React.useRef<number>();
-
-  // Merge trigger event into one for each frame
-  const showDebounceWave: ShowWave = (event) => {
-    raf.cancel(rafId.current!);
-
-    rafId.current = raf(() => {
-      showWave(event);
-    });
+    // Clean up
+    animationStartId.value = window.setTimeout(() => {
+      resetEffect(node);
+    }, 500);
   };
 
-  return showDebounceWave;
-};
+  const resetEffect = (node: HTMLElement) => {
+    if (!node || node.nodeType !== 1) {
+      return;
+    }
 
-export default useWave;
+    isInserted.value = false;
+    if (clickWaveTimeoutId.value) {
+      clearTimeout(clickWaveTimeoutId.value);
+    }
+    if (animationStartId.value) {
+      clearTimeout(animationStartId.value);
+    }
+    if (extraNode.value && node.contains(extraNode.value)) {
+      node.removeChild(extraNode.value);
+    }
+    extraNode.value = null;
+  };
+
+  const getWaveStyle = (): CSSObject => ({
+    [`
+      .${prefixCls}-click-animating-node {
+        box-sizing: border-box;
+        position: absolute;
+        border-radius: inherit;
+        border: 0 solid ${waveColor.value || '#1677ff'};
+        opacity: 0.2;
+        animation: fadeEffect 2s cubic-bezier(0.08, 0.82, 0.17, 1), waveEffect 0.4s cubic-bezier(0.08, 0.82, 0.17, 1);
+        animation-fill-mode: forwards;
+        display: block;
+        pointer-events: none;
+      }
+      @keyframes fadeEffect {
+        100% {
+          opacity: 0;
+        }
+      }
+      @keyframes waveEffect {
+        100% {
+          top: -6px;
+          left: -6px;
+          bottom: -6px;
+          right: -6px;
+          border-width: 6px;
+        }
+      }
+    `]: {},
+  });
+
+  // Inject wave styles
+  const { hashId } = useStyleRegister(
+    computed(() => ({
+      theme: theme.value,
+      token: {},
+      hashId: '',
+      path: ['wave'],
+    })),
+    () => [getWaveStyle()],
+  );
+
+  return {
+    showWave,
+    onClick,
+    resetEffect,
+  };
+}

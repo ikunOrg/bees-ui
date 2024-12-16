@@ -1,46 +1,46 @@
-import React, { useContext, useRef } from 'react';
+import { Component, ComponentInterface, Element, Prop, h } from '@stencil/core';
+import { computed, effect, ref } from '@vue/reactivity';
+import { useConfigInject } from '../../config-provider';
 import classNames from 'classnames';
-import isVisible from 'rc-util/lib/Dom/isVisible';
-import { composeRef, getNodeRef, supportRef } from 'rc-util/lib/ref';
-
-import type { ConfigConsumerProps } from '../../config-provider';
-import { ConfigContext } from '../../config-provider';
-import { cloneElement } from '../reactNode';
-import type { WaveComponent } from './interface';
+import isVisible from '../is-visible';
+import type { WaveProps } from './interface';
 import useStyle from './style';
-import useWave from './useWave';
+import { useWave } from './useWave';
 
-export interface WaveProps {
-  disabled?: boolean;
-  children?: React.ReactNode;
-  component?: WaveComponent;
-}
+@Component({
+  tag: 'bees-wave',
+  shadow: false,
+})
+export class Wave implements ComponentInterface, WaveProps {
+  @Element() el!: HTMLElement;
+  @Prop() disabled?: boolean;
+  @Prop() component?: string;
 
-const Wave: React.FC<WaveProps> = (props) => {
-  const { children, disabled, component } = props;
-  const { getPrefixCls } = useContext<ConfigConsumerProps>(ConfigContext);
-  const containerRef = useRef<HTMLElement>(null);
+  private containerRef = ref<HTMLElement | null>(null);
 
-  // ============================== Style ===============================
-  const prefixCls = getPrefixCls('wave');
-  const [, hashId] = useStyle(prefixCls);
+  componentDidLoad() {
+    this.setupWaveEffect();
+  }
 
-  // =============================== Wave ===============================
-  const showWave = useWave(containerRef, classNames(prefixCls, hashId), component);
+  disconnectedCallback() {
+    this.cleanup();
+  }
 
-  // ============================== Effect ==============================
-  React.useEffect(() => {
-    const node = containerRef.current;
-    if (!node || node.nodeType !== 1 || disabled) {
+  private setupWaveEffect() {
+    const { getPrefixCls } = useConfigInject();
+    const prefixCls = getPrefixCls('wave');
+    const { hashId } = useStyle(prefixCls);
+
+    const { showWave, onClick, resetEffect } = useWave();
+
+    const node = this.containerRef.value;
+    if (!node || node.nodeType !== 1 || this.disabled) {
       return;
     }
 
-    // Click handler
-    const onClick = (e: MouseEvent) => {
-      // Fix radio button click twice
+    const onClickHandler = (e: MouseEvent) => {
       if (
         !isVisible(e.target as HTMLElement) ||
-        // No need wave
         !node.getAttribute ||
         node.getAttribute('disabled') ||
         (node as HTMLInputElement).disabled ||
@@ -49,31 +49,53 @@ const Wave: React.FC<WaveProps> = (props) => {
       ) {
         return;
       }
-      showWave(e);
+
+      onClick(node, '');
     };
 
-    // Bind events
-    node.addEventListener('click', onClick, true);
-    return () => {
-      node.removeEventListener('click', onClick, true);
-    };
-  }, [disabled]);
+    node.addEventListener('click', onClickHandler, true);
 
-  // ============================== Render ==============================
-  if (!React.isValidElement(children)) {
-    return children ?? null;
+    effect(() => {
+      return () => {
+        node.removeEventListener('click', onClickHandler, true);
+        resetEffect(node);
+      };
+    });
   }
 
-  const ref = supportRef(children) ? composeRef(getNodeRef(children), containerRef) : containerRef;
+  private cleanup() {
+    if (this.containerRef.value) {
+      const node = this.containerRef.value;
+      node.removeEventListener('click', () => {}, true);
+    }
+  }
 
-  return cloneElement(children, { ref });
-};
+  render() {
+    const { getPrefixCls } = useConfigInject();
+    const prefixCls = getPrefixCls('wave');
+    const { hashId } = useStyle(prefixCls);
 
-if (process.env.NODE_ENV !== 'production') {
-  Wave.displayName = 'Wave';
+    const child = this.el.firstElementChild as HTMLElement;
+    if (!child) return null;
+
+    const ref = computed(() => {
+      this.containerRef.value = child;
+      return child;
+    });
+
+    const className = classNames(
+      child.className,
+      TARGET_CLS,
+      {
+        [hashId]: hashId,
+      },
+    );
+
+    child.className = className;
+
+    return <slot />;
+  }
 }
-
-export default Wave;
 
 import { Wave } from './wave';
 import { WaveEffect } from './wave-effect';

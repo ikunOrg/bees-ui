@@ -1,40 +1,36 @@
 import { FullToken, GenerateStyle, genComponentStyleHook } from '@/components/theme/internal';
 
-// biome-ignore lint/suspicious/noEmptyInterface: ComponentToken need to be empty by default
 export interface ComponentToken {}
 
-export interface WaveToken extends FullToken<'Wave'> {}
+interface WaveToken extends FullToken<'Wave'> {
+  componentCls: string;
+}
 
 const genWaveStyle: GenerateStyle<WaveToken> = (token) => {
-  const { componentCls, colorPrimary } = token;
+  const { componentCls } = token;
+
   return {
     [componentCls]: {
       position: 'absolute',
       background: 'transparent',
       pointerEvents: 'none',
       boxSizing: 'border-box',
-      color: `var(--wave-color, ${colorPrimary})`,
+      color: 'inherit',
 
-      boxShadow: `0 0 0 0 currentcolor`,
-      opacity: 0.2,
-
-      // =================== Motion ===================
-      '&.wave-motion-appear': {
-        transition: [`box-shadow 0.4s ${token.motionEaseOutCirc}`, `opacity 2s ${token.motionEaseOutCirc}`].join(','),
-
-        '&-active': {
-          boxShadow: `0 0 0 6px currentcolor`,
-          opacity: 0,
-        },
-        '&.wave-quick': {
-          transition: [
-            `box-shadow ${token.motionDurationSlow} ${token.motionEaseInOut}`,
-            `opacity ${token.motionDurationSlow} ${token.motionEaseInOut}`,
-          ].join(','),
-        },
+      '&-click-animating-node': {
+        position: 'absolute',
+        borderRadius: 'inherit',
+        border: '0 solid currentColor',
+        opacity: 0.2,
+        animationName: 'fadeEffect',
+        animationDuration: '2s',
+        animationTimingFunction: 'cubic-bezier(0.08, 0.82, 0.17, 1)',
+        animationFillMode: 'forwards',
+        animationPlayState: 'paused',
+        content: '""',
       },
     },
   };
 };
 
-export default genComponentStyleHook('Wave', (token) => [genWaveStyle(token)]);
+export default genComponentStyleHook('Wave', (token) => [genWaveStyle(token)], {});
