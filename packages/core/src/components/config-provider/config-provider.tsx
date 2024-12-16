@@ -1,8 +1,8 @@
-import type { Locale } from '@bees-ui/core/src/locale';
 import { Component, Prop, h } from '@stencil/core';
 
 import type { SizeType, ThemeConfig } from './context';
 import { useConfigContext } from './context';
+import { Locale } from '../locale';
 
 @Component({
   tag: 'bees-config-provider',

@@ -1,5 +1,5 @@
-import { useConfigInject } from '@components/config-provider';
 import { Component, ComponentInterface, Prop, h } from '@stencil/core';
+import { useConfigInject } from '../config-provider';
 
 @Component({
   tag: 'bees-layout-footer',

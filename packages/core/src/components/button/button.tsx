@@ -1,12 +1,12 @@
-import useConfigInject from '@components/config-provider/hooks/use-config-inject';
 import { Component, ComponentInterface, Prop, h, EventEmitter, Event } from '@stencil/core';
 import { computed, shallowRef } from '@vue/reactivity';
 import classNames from 'clsx';
 import useStyle from './style';
 import { ButtonHTMLType, ButtonShape, ButtonType, GroupSizeContext, Loading } from './buttonHelpers';
-import { SizeType } from '@components/config-provider/context';
-import { MouseEventHandler } from '@utils/EventInterface';
-import { useCompactItemContext } from '@components/space/Compact';
+import { SizeType } from '@/components';
+import { MouseEventHandler } from 'react';
+import { useConfigInject } from '../config-provider';
+import { useCompactItemContext } from '../space/Compact';
 
 @Component({
   tag: 'bees-button',

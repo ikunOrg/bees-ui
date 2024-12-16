@@ -1,4 +1,4 @@
-import { inject } from '@utils/store';
+import { inject } from '@/components/_util/store';
 import { SizeType, configProviderKey, defaultConfigProvider } from '../context';
 import { useInjectDisabled } from '../disabled-context';
 import { useInjectSize } from '../size-context';

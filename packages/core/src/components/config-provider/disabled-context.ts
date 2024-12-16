@@ -1,4 +1,4 @@
-import { inject, provide } from '@utils/store';
+import { inject, provide } from '@components/_util/store';
 
 export type DisabledType = boolean | undefined;
 const DisabledContextKey = Symbol('DisabledContextKey');

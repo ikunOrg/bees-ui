@@ -1,9 +1,11 @@
-import { Locale } from '@bees-ui/core/src/locale';
-import { AliasToken, OverrideToken } from '@theme/interface';
 import { createStore } from '@stencil/store';
-import { DEFAULT_DIRECTION, ICONPREFIX, PREFIX } from '@utils/constant';
-import { inject, provide } from '@utils/store';
 import { ComputedRef, computed } from '@vue/reactivity';
+import { PREFIX, ICONPREFIX, DEFAULT_DIRECTION } from '../_util/constant';
+import { inject, provide } from '../_util/store';
+import { Locale } from '../locale';
+import { AliasToken, OverrideToken } from '../theme/interface';
+
+export const defaultPrefixCls = 'ikun';
 
 export type DirectionType = 'ltr' | 'rtl' | undefined;
 export type SizeType = 'small' | 'middle' | 'large' | 'default' | undefined;

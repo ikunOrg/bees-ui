@@ -1,7 +1,7 @@
 import { CSSObject, CSSInterpolation } from '@cssinjs/index';
-import { genCompactItemStyle } from '@style/compact-item';
-import { genCompactItemVerticalStyle } from '@style/compact-item-vertical';
-import { genFocusStyle } from '@style/index';
+import { genCompactItemStyle } from '@components/style/compact-item';
+import { genCompactItemVerticalStyle } from '@components/style/compact-item-vertical';
+import { genFocusStyle } from '@components/style/index';
 import { FullToken, mergeToken, genComponentStyleHook, GenerateStyle } from '@theme/internal';
 
 /** Component only token. Which will handle additional calculation of alias token */

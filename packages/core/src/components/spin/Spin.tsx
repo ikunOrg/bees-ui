@@ -1,8 +1,8 @@
-import { useConfigInject } from '@components/config-provider';
 import { Component, ComponentInterface, Prop, State, h } from '@stencil/core';
 import useStyle from './style';
 import { shallowRef } from '@vue/reactivity';
 import classNames from 'classnames';
+import { useConfigInject } from '../config-provider';
 
 export type SpinSize = 'small' | 'default' | 'large';
 

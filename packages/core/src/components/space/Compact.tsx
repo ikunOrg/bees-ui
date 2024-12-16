@@ -1,8 +1,8 @@
-import { DirectionType } from '@components/config-provider/context';
-import createContext from '@utils/createContext';
 import { computed, Ref } from '@vue/reactivity';
 import classNames from 'classnames';
 import { isEmpty } from 'lodash-es';
+import { DirectionType } from '../config-provider/context';
+import createContext from '../_util/createContext';
 
 export const spaceCompactItemProps = () => ({});
 

@@ -1,13 +1,13 @@
-import { useConfigInject } from '@components/config-provider';
 import { Component, ComponentInterface, Prop, State, h, Event, Watch, EventEmitter } from '@stencil/core';
-import { inject, provide } from '@utils/store';
 import { Properties as CSSProperties } from 'csstype';
 import { SiderCollapsedKey, SiderHookProviderKey } from './injectionKey';
 import { shallowRef } from '@vue/reactivity';
 import classNames from 'classnames';
 import { chevronDown } from 'ionicons/icons';
-import isNumeric from '@utils/isNumeric';
-import { StencilCSS } from '@utils/type';
+import isNumeric from '../_util/isNumeric';
+import { inject, provide } from '../_util/store';
+import { StencilCSS } from '../_util/type';
+import { useConfigInject } from '../config-provider';
 
 export type CollapseType = 'clickTrigger' | 'responsive';
 

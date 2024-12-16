@@ -1,6 +1,6 @@
-import { Keyframes, CSSObject } from '@cssinjs/index';
-import { resetComponent } from '@style/index';
-import { FullToken, GenerateStyle, genComponentStyleHook, mergeToken } from '@theme/internal';
+import { resetComponent } from '@/components/style';
+import { FullToken, GenerateStyle, genComponentStyleHook, mergeToken } from '@/components/theme/internal';
+import { Keyframes, CSSObject } from '@/internal/cssinjs';
 
 export interface ComponentToken {
   contentHeight: number;

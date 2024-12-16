@@ -1,6 +1,6 @@
 import { Component, Host, Prop, State, Watch, h } from '@stencil/core';
-import { Locale } from '../../locale';
-import warning from '../../utils/warning';
+import { Locale } from '../locale';
+import warning from '../_util/warning';
 
 @Component({
   tag: 'bees-locale-provider',

@@ -1,4 +1,4 @@
-import createContext from '@utils/createContext';
+import createContext from '@components/_util/createContext';
 import { SizeType } from '@components/config-provider/size-context';
 
 const ButtonTypes = ['default', 'primary', 'dashed', 'link', 'text'] as const;

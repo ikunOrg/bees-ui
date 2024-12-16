@@ -23,21 +23,15 @@
     "removeComments": false,
     "target": "es2017",
     "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+    },
     "strictNullChecks": false,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "allowJs": true,
     "stripInternal": true,
-
-    "paths": {
-      "@utils/*": ["src/utils/*"],
-      "@components/*": ["src/components/*"],
-      "@global/*": ["src/global/*"],
-      "@cssinjs/*": ["src/cssinjs/*"],
-      "@theme/*": ["src/theme/*"],
-      "@style/*": ["src/style/*"]
-    }
   },
   "include": ["src"],
-  "exclude": ["node_modules", "**/*.md", "**/demo/**"]
+  "exclude": ["node_modules", "**/*.md", "**/demo/**"],
 }

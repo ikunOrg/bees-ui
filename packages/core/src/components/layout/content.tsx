@@ -1,4 +1,4 @@
-import { useConfigInject } from '@components/config-provider';
+import { useConfigInject } from '../config-provider';
 import { Component, ComponentInterface, Prop, h } from '@stencil/core';
 
 @Component({

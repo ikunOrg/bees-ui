@@ -1,10 +1,10 @@
-import { useConfigInject } from '@components/config-provider';
 import { Component, ComponentInterface, Prop, h } from '@stencil/core';
 import useStyle from './style';
-import { provide } from '@utils/store';
 import { computed, ref } from '@vue/reactivity';
 import { SiderHookProviderKey } from './injectionKey';
 import classNames from 'classnames';
+import { provide } from '../_util/store';
+import { useConfigInject } from '../config-provider';
 
 @Component({
   tag: 'bees-layout',
