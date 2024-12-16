@@ -12,8 +12,8 @@
   "license": "MIT",
   "dependencies": {
     "@bees-ui/core": "workspace:^",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",

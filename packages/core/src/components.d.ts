@@ -10,7 +10,7 @@ import { SizeType } from "./components/config-provider/context";
 import { MouseEventHandler } from "./utils/EventInterface";
 import { SizeType as SizeType1, ThemeConfig } from "./components/config-provider/context";
 import { Locale } from "@bees-ui/core/src/locale";
-import { CSSProperties } from "csstype";
+import { Properties as CSSProperties } from "csstype";
 import { Locale as Locale1 } from "./locale";
 import { SpinSize } from "./components/spin/Spin";
 export { ButtonHTMLType, ButtonShape, ButtonType, Loading } from "./components/button/buttonHelpers";
@@ -18,7 +18,7 @@ export { SizeType } from "./components/config-provider/context";
 export { MouseEventHandler } from "./utils/EventInterface";
 export { SizeType as SizeType1, ThemeConfig } from "./components/config-provider/context";
 export { Locale } from "@bees-ui/core/src/locale";
-export { CSSProperties } from "csstype";
+export { Properties as CSSProperties } from "csstype";
 export { Locale as Locale1 } from "./locale";
 export { SpinSize } from "./components/spin/Spin";
 export namespace Components {

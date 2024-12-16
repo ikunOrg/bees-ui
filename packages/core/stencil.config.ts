@@ -1,8 +1,5 @@
 import { Config } from '@stencil/core';
 import { stencilCachePath, stencilWWWPath } from '../../scripts/paths';
-import { vueOutputTarget } from '@bees-ui/vue-output-target';
-import { reactOutputTarget } from '@bees-ui/react-output-target';
-import { svelteOutputTarget } from '@bees-ui/svelte-output-target';
 import dynamic from '@rollup/plugin-dynamic-import-vars';
 
 const isDev = process.argv.includes('--mm');
@@ -36,27 +33,6 @@ export const config: Config = {
       serviceWorker: null, // disable service workers
       dir: stencilWWWPath,
     },
-    vueOutputTarget({
-      componentCorePackage: '@bees-ui/core',
-      includeImportCustomElements: true,
-      includePolyfills: false,
-      includeDefineCustomElements: false,
-      proxiesFile: '../vue/src/components.ts',
-    }),
-    reactOutputTarget({
-      componentCorePackage: '@bees-ui/core',
-      includeImportCustomElements: true,
-      includePolyfills: false,
-      includeDefineCustomElements: false,
-      proxiesFile: '../react/src/components.ts',
-    }),
-    svelteOutputTarget({
-      componentCorePackage: '@bees-ui/core',
-      // includeImportCustomElements: true,
-      includePolyfills: false,
-      includeDefineCustomElements: false,
-      proxiesFile: '../svelte/src/components.ts',
-    }),
   ],
   testing: {
     browserHeadless: 'new',

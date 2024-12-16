@@ -59,7 +59,6 @@ export class Button implements ComponentInterface {
     const autoInsertSpace = computed(() => autoInsertSpaceInButton.value !== false);
     console.log('autoInsertSpace', autoInsertSpace.value);
 
-
     const classes = computed(() => {
       const { type, shape = 'default', ghost, block, danger } = this;
       const pre = prefixCls.value;
@@ -89,9 +88,8 @@ export class Button implements ComponentInterface {
 
     let buttonNode = (
       <button {...buttonProps}>
-        <bees-wave>
-          <slot></slot>
-        </bees-wave>
+        <bees-wave></bees-wave>
+        <slot></slot>
       </button>
     );
 
