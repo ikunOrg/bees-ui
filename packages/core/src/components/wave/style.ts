@@ -6,7 +6,7 @@ export interface ComponentToken {}
 
 export type WaveToken = FullToken<'Wave'>;
 
-const genWaveStyle: GenerateStyle<WaveToken> = token => {
+const genWaveStyle: GenerateStyle<WaveToken> = (token) => {
   const { componentCls, colorPrimary } = token;
   return {
     [componentCls]: {
@@ -21,18 +21,21 @@ const genWaveStyle: GenerateStyle<WaveToken> = token => {
 
       // =================== Motion ===================
       '&.wave-motion-appear': {
-        transition: [
-          `box-shadow 0.4s ${token.motionEaseOutCirc}`,
-          `opacity 2s ${token.motionEaseOutCirc}`,
-        ].join(','),
+        transition: [`box-shadow 0.4s ${token.motionEaseOutCirc}`, `opacity 2s ${token.motionEaseOutCirc}`].join(','),
 
         '&-active': {
           boxShadow: `0 0 0 6px currentcolor`,
           opacity: 0,
+        },
+        '&.wave-quick': {
+          transition: [
+            `box-shadow ${token.motionDurationSlow} ${token.motionEaseInOut}`,
+            `opacity ${token.motionDurationSlow} ${token.motionEaseInOut}`,
+          ].join(','),
         },
       },
     },
   };
 };
 
-export default genComponentStyleHook('Wave', token => [genWaveStyle(token)]);
+export default genComponentStyleHook('Wave', (token) => [genWaveStyle(token)]);

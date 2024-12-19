@@ -379,9 +379,9 @@ export default function useStyleRegister(
         style?.setAttribute(ATTR_TOKEN, tokenKey.value);
 
         // Dev usage to find which cache path made this easily
-        if (process.env.NODE_ENV !== 'production') {
-          style?.setAttribute(ATTR_CACHE_PATH, fullPath.value.join('|'));
-        }
+        // if (process.env.NODE_ENV !== 'production') {
+        style?.setAttribute(ATTR_CACHE_PATH, fullPath.value.join('|'));
+        // }
 
         // Inject client side effect style
         Object.keys(effectStyle).forEach((effectKey) => {

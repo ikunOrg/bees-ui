@@ -1,52 +1,132 @@
-import { useConfigContextInject } from '@components/config-provider/context';
-import { FunctionalComponent } from '@stencil/core';
-import { ref } from '@vue/reactivity';
-import useStyle from './style';
-import classNames from 'classnames';
-import useWave from './use-wave';
-import isVisible from '@utils/isVisible';
+import { Component, h, Element, Prop, State, Listen } from '@stencil/core';
+import wrapperRaf from '@utils/raf';
+import { getTargetWaveColor, validateNum } from './utils';
+import { Transition } from '../../internal/transition';
 
-interface WaveProps {
-  component: 'Button';
-  disabled: boolean;
-}
+@Component({
+  tag: 'bees-wave-effect',
+})
+export class WaveEffect {
+  @Element() el!: HTMLElement;
 
-export const Wave: FunctionalComponent<WaveProps> = (prsop, children, utils) => {
-  const { component } = prsop;
-  const { getPrefixCls } = useConfigContextInject();
-  const containerRef = ref<HTMLElement>();
+  @Prop() target!: HTMLElement;
+  @Prop() waveClassName?: string;
 
-  // =================== Style ===================
-  const prefixCls = getPrefixCls('wave');
-  const [, hashId] = useStyle(ref(prefixCls));
+  @State() color: string | null = null;
+  @State() borderRadius: number[] = [];
+  @State() left: number = 0;
+  @State() top: number = 0;
+  @State() width: number = 0;
+  @State() height: number = 0;
+  @State() enabled: boolean = false;
 
-  const showWave = useWave(containerRef, classNames(prefixCls, hashId), component);
+  private divRef?: HTMLDivElement;
+  private resizeObserver?: ResizeObserver;
+  private rafId?: number;
+  private timeoutId?: number;
 
-  // =================== Click ===================
-  const onClick = (e: MouseEvent) => {
-    const node = containerRef.value;
-    if (
-      !isVisible(e.target as HTMLElement) ||
-      // No need wave
-      !node.getAttribute ||
-      node.getAttribute('disabled') ||
-      (node as HTMLInputElement).disabled ||
-      node.className.includes('disabled') ||
-      node.className.includes('-leave')
-    ) {
-      return;
+  private syncPos() {
+    const nodeStyle = getComputedStyle(this.target);
+
+    // Get wave color
+    this.color = getTargetWaveColor(this.target);
+
+    const isStatic = nodeStyle.position === 'static';
+
+    // Rect
+    const { borderLeftWidth, borderTopWidth } = nodeStyle;
+    this.left = isStatic ? this.target.offsetLeft : validateNum(-parseFloat(borderLeftWidth));
+    this.top = isStatic ? this.target.offsetTop : validateNum(-parseFloat(borderTopWidth));
+    this.width = this.target.offsetWidth;
+    this.height = this.target.offsetHeight;
+
+    // Border radius
+    const { borderTopLeftRadius, borderTopRightRadius, borderBottomLeftRadius, borderBottomRightRadius } = nodeStyle;
+
+    this.borderRadius = [
+      borderTopLeftRadius,
+      borderTopRightRadius,
+      borderBottomRightRadius,
+      borderBottomLeftRadius,
+    ].map((radius) => validateNum(parseFloat(radius)));
+  }
+
+  private clear() {
+    clearTimeout(this.timeoutId);
+    wrapperRaf.cancel(this.rafId);
+    this.resizeObserver?.disconnect();
+  }
+
+  private removeDom() {
+    const holder = this.divRef?.parentElement;
+    if (holder?.parentElement) {
+      holder.parentElement.removeChild(holder);
     }
-    showWave?.();
-  };
+  }
 
-  return utils.map(children, (child) => ({
-    ...child,
-    vattrs: {
-      ...child.vattrs,
-      ref: (el: HTMLElement) => {
-        containerRef.value = el;
-      },
-      onclick: onClick,
-    },
-  }));
-};
+  componentDidLoad() {
+    this.clear();
+
+    this.timeoutId = window.setTimeout(() => {
+      this.removeDom();
+    }, 50000);
+
+    if (this.target) {
+      this.rafId = wrapperRaf(() => {
+        this.syncPos();
+        this.enabled = true;
+      });
+
+      if (typeof ResizeObserver !== 'undefined') {
+        this.resizeObserver = new ResizeObserver(() => this.syncPos());
+        this.resizeObserver.observe(this.target);
+      }
+    }
+  }
+
+  disconnectedCallback() {
+    this.clear();
+  }
+
+  @Listen('transitionend')
+  onTransitionEnd(e: TransitionEvent) {
+    if (e.propertyName === 'opacity') {
+      this.removeDom();
+    }
+  }
+
+  render() {
+    if (!this.enabled) return null;
+
+    const waveStyle = {
+      left: `${this.left}px`,
+      top: `${this.top}px`,
+      width: `${this.width}px`,
+      height: `${this.height}px`,
+      borderRadius: this.borderRadius.map((radius) => `${radius}px`).join(' '),
+      '--wave-color': this.color,
+    };
+
+    const waveElement = (
+      <div
+        ref={(el) => (this.divRef = el)}
+        class={{
+          [this.waveClassName]: true,
+        }}
+        style={waveStyle}
+      />
+    );
+
+    return (
+      <Transition
+        appear={true}
+        name="wave-motion"
+        appearFromClass="wave-motion-appear"
+        appearActiveClass="wave-motion-appear"
+        appearToClass="wave-motion-appear wave-motion-appear-active"
+      >
+        {waveElement}
+      </Transition>
+    );
+  }
+}

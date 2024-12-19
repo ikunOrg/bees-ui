@@ -7,7 +7,7 @@ import { ButtonHTMLType, ButtonShape, ButtonType, GroupSizeContext, Loading } fr
 import { SizeType } from '@components/config-provider/context';
 import { MouseEventHandler } from '@utils/EventInterface';
 import { useCompactItemContext } from '@components/space/Compact';
-import { Wave } from '@components/wave/wave-effect';
+import { Wave } from '@components/wave';
 
 @Component({
   tag: 'bees-button',

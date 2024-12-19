@@ -11,6 +11,7 @@
   "dependencies": {
     "@bees-ui/core": "workspace:^",
     "@bees-ui/vue": "workspace:^",
+    "ant-design-vue": "^4.2.6",
     "vue": "^3.5.13"
   },
   "devDependencies": {
